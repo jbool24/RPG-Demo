@@ -1,0 +1,106 @@
+html {}
+
+
+/*   #E8E8E8#5588A3#145374#00334E*/
+
+body {
+    font-size: 22px;
+    color: #fff;
+    background-image: url("../images/stars-bg.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+i {
+    margin: 5px;
+}
+
+i.fa-heart {
+    color: red;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #5588A3;
+    text-decoration: none;
+}
+
+img {
+    margin: 10px;
+    border-radius: 50%;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+}
+
+#nav-bar {
+    display: flex;
+}
+
+#header {
+    display: flex;
+    height: 140px;
+    padding: 20px;
+    background-color: #00334E;
+    justify-content: space-between;
+}
+
+#footer {
+    padding: 40px 0;
+    text-align: center;
+    background-color: #145374;
+}
+
+#gameboard {
+    display: flex;
+    flex-grow: 1;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 1000px;
+}
+
+.list-item {
+    padding-left: 5px;
+}
+
+.characterFrame {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px auto;
+    background-color: rgba(232, 232, 232, 0.8);
+}
+
+.fighter {
+    border: solid black;
+    max-height: 330px;
+    height: auto;
+    margin: 18px;
+    padding: 5px;
+    background-color: #eee;
+}
+
+.fighter>ul {
+    padding: 4px;
+}
+
+.fighter>ul>li {
+    font-family: "TradeGothicBold", sans-serif;
+    margin: 2px;
+    color: black;
+}
+
+.fighterStats {}
+
+.defender {
+    background-color: #5588A3;
+}
