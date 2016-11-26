@@ -12,7 +12,7 @@ body {
 }
 
 i {
-    margin: 5px;
+    margin: 8px;
 }
 
 i.fa-heart {
@@ -28,7 +28,7 @@ a {
 }
 
 a:hover {
-    color: #5588A3;
+    color: gold;
     text-decoration: none;
 }
 
@@ -40,27 +40,84 @@ img {
     border-width: 2px;
 }
 
+button {
+    max-width: 200px;
+    background-color: #5588A3;
+}
+
 #nav-bar {
     display: flex;
+    flex-basis: fit-content;
+}
+
+#nav-bar a {
+    color: #fff;
+}
+
+#nav-bar>ul {
+    display: flex;
+}
+
+#nav-bar>ul>li {
+    margin: 0 15px;
+    padding-top: 50px;
+}
+
+#nav-bar>ul>:not(:last-child):after {
+    content: "|";
+    color: #e4e3e3;
+    margin-left: 30px;
 }
 
 #header {
     display: flex;
     height: 140px;
     padding: 20px;
-    background-color: #00334E;
+    align-items: center;
+    background-color: rgba(0, 51, 78, 0.8);
     justify-content: space-between;
+    /*-webkit-box-shadow: 0px 10px 32px -11px rgba(125,124,125,1);
+    -moz-box-shadow: 0px 10px 32px -11px rgba(125,124,125,1);
+    box-shadow: 0px 10px 32px -11px rgba(125,124,125,1);*/
+}
+
+#header>div>ul {
+    display: flex;
+}
+
+#header>div>ul>li {
+    margin: 0 15px;
+}
+
+#header>div>ul>li>a {
+    color: #fff;
 }
 
 #footer {
-    padding: 40px 0;
+    padding-top: 15px;
+    height: 60px;
     text-align: center;
-    background-color: #145374;
+    background-color: rgba(20, 83, 116, 0.8);
 }
 
 #gameboard {
     display: flex;
     flex-grow: 1;
+}
+
+.hide {
+    display: none;
+}
+
+.title {
+    color: #fff;
+    font-size: 38px;
+    font-weight: bold;
+    text-shadow: 2px 3px 5px black;
+    font-family: "Helvetica", sans-serif;
+    height: 140px;
+    padding: 50px 10px 0 10px;
+    background-color: red;
 }
 
 .main-container {
@@ -73,17 +130,38 @@ img {
     padding-left: 5px;
 }
 
-.characterFrame {
+.gameFrame {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    min-width: 60%;
     margin: 10px auto;
     background-color: rgba(232, 232, 232, 0.8);
 }
 
+.characterFrame, .battleFrame {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Marvel', sans-serif;
+}
+
+.characterFrame {
+    margin: 10px auto;
+}
+
+.battleFrame {
+    justify-content: space-between;
+}
+
+.message-board {
+  color: #000;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  padding: 10px 10px;
+  margin: 0 auto;
+}
+
 .fighter {
     border: solid black;
-    max-height: 330px;
-    height: auto;
     margin: 18px;
     padding: 5px;
     background-color: #eee;
@@ -94,13 +172,20 @@ img {
 }
 
 .fighter>ul>li {
-    font-family: "TradeGothicBold", sans-serif;
     margin: 2px;
     color: black;
 }
 
 .fighterStats {}
 
+.offender {}
+
 .defender {
     background-color: #5588A3;
+}
+
+.drop-shadow {
+    -webkit-box-shadow: 9px 14px 44px -8px rgba(125, 124, 125, 1);
+    -moz-box-shadow: 9px 14px 44px -8px rgba(125, 124, 125, 1);
+    box-shadow: 9px 14px 44px -8px rgba(125, 124, 125, 1);
 }
