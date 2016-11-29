@@ -82,7 +82,10 @@ function showDialog(title, strMsg, btnText, action) {
                 action(); // main game function call here
                 $(this).dialog("close");
             }
-        }]
+        }],
+        onfade: function() {
+            backgroundMusic.stop();
+        }
     });
 }
 
@@ -97,8 +100,8 @@ let gameBattle = {
         console.log("called init");
 
         // Play battle music in not already playing
-        if (backgroundMusic.playing() === false){
-          backgroundMusic.play();
+        if (backgroundMusic.playing() === false) {
+            backgroundMusic.play();
         }
         // Add a new Battle and Characters and update the gameboard
         gameBattle.battle = new Battle();
@@ -112,7 +115,7 @@ let gameBattle = {
                 gameBattle.assignFighter(getCharacter(this.id));
                 gameBattle.fighter.team = 0;
                 gameBattle.updateMessageBoard("OK, Choose you opponent.");
-            } else if (Object.keys(gameBattle.currentDefender).length === 0) {
+            } else if (Object.keys(gameBattle.currentDefender).length === 0 && gameBattle.fighter._id !== this.id) {
                 gameBattle.assignDefender(getCharacter(this.id));
                 gameBattle.startBattle();
             }
@@ -151,6 +154,9 @@ let gameBattle = {
                 };
 
                 if (gameBattle.currentDefender.healthPoints <= 0) {
+                    if (sound.playing()) {
+                        sound.stop();
+                    }
                     sound.play("blam");
                     gameBattle.updateDefenders(gameBattle.currentDefender);
                     gameBattle.currentDefender = {};
@@ -159,15 +165,16 @@ let gameBattle = {
                     gameBattle.updateMessageBoard("OK, Choose another opponent.");
                 };
 
-                if (gameBattle.defenders.length === 0 && gameBattle.fighter.healthPoints > 0) {
+                if (gameBattle.defenders.length === 0) {
+                    if (sound.playing()) {
+                        sound.stop();
+                    }
                     sound.play('likeIt');
                     gameBattle.battle.scoreBoard.winner = gameBattle.fighter.name;
                     gameBattle.updateMessageBoard("YOU ARE THE WINNER!!");
                     setTimeout(function() {
                         gameBattle.reset();
-                    }, 4000);
-                } else {
-                  gameBattle.reset();
+                    }, 2000);
                 };
 
             });
@@ -176,12 +183,20 @@ let gameBattle = {
 
     reset: function() {
         console.log("Called gameBattle.reset");
+
+        if (backgroundMusic.playing()) {
+            backgroundMusic.fade(backgroundMusic.volume(), 0.0, 2000);
+        }
+
+        if (gameBattle.fighter.name !== gameBattle.battle.scoreBoard.winner) {
+            gameBattle.updateMessageBoard("YOU LOSE!!")
+        }
+        gameBattle.fighter = {};
+        gameBattle.currentDefender = {};
+        gameBattle.characters = {};
+        gameBattle.hideAttackButton();
         $(".fighter").remove();
         $(".defender").remove();
-        if (backgroundMusic.playing()) {
-            backgroundMusic.fade(backgroundMusic.volume(), 0.0, 2500);
-        }
-        gameBattle.hideAttackButton();
         gameBattle.battle.reset();
         showDialog("Game Over", "Yea, So it looks like " + gameBattle.battle.scoreBoard.winner + " is the winner", "Replay?", gameBattle.init);
     },
