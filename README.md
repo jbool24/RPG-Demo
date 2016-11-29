@@ -18,4 +18,4 @@ Whenever the player clicks attack, their character damages the defender. The opp
 
 When the defender's HP is reduced to zero or below, remove the enemy from the defender area. The player character can now choose a new opponent. The player wins the game by defeating all enemy characters. The player loses the game the game if their character's HP falls to zero or below
 
-{Demo}(https://jbool24.github.io/RPG-Demo).
+[Demo](https://jbool24.github.io/RPG-Demo)
