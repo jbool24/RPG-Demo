@@ -20,7 +20,7 @@ const sound = new Howl({
         blast: [0, 1500],
         attack: [3800, 500],
         blam: [5290, 1000],
-        likeIt: [12400, 1000]
+        likeIt: [12400, 1500]
     }
 });
 const backgroundMusic = new Howl({
@@ -124,8 +124,8 @@ let gameBattle = {
     }, //End init
 
     startBattle: function() {
-        let defenderHP = gameBattle.currentDefender.healthPoints;
-        let fighterHP = gameBattle.fighter.healthPoints;
+        var defenderHP = gameBattle.currentDefender.healthPoints;
+        var fighterHP = gameBattle.fighter.healthPoints;
 
         if (gameBattle.currentDefender !== "" && gameBattle.fighter !== "") {
             gameBattle.updateMessageBoard("OK, FIGHT!!");
@@ -146,8 +146,8 @@ let gameBattle = {
                 gameBattle.updateStats();
 
                 if (gameBattle.fighter.healthPoints <= 0) {
-                    gameBattle.battle.scoreBoard.winner = gameBattle.currentDefender.name;
-                    for (var i = 0; i < gameBattle.characters.length; i++) {
+                    gameBattle.battle.winner = gameBattle.currentDefender;
+                    for (let i = 0; i < gameBattle.characters.length; i++) {
                         $("#" + gameBattle.characters[i]._id).remove();
                     };
                     gameBattle.reset();
@@ -170,7 +170,7 @@ let gameBattle = {
                         sound.stop();
                     }
                     sound.play('likeIt');
-                    gameBattle.battle.scoreBoard.winner = gameBattle.fighter.name;
+                    gameBattle.battle.winner = gameBattle.fighter;
                     gameBattle.updateMessageBoard("YOU ARE THE WINNER!!");
                     setTimeout(function() {
                         gameBattle.reset();
@@ -188,7 +188,7 @@ let gameBattle = {
             backgroundMusic.fade(backgroundMusic.volume(), 0.0, 2000);
         }
 
-        if (gameBattle.fighter.name !== gameBattle.battle.scoreBoard.winner) {
+        if (gameBattle.fighter.name !== gameBattle.battle.winner.name) {
             gameBattle.updateMessageBoard("YOU LOSE!!")
         }
         gameBattle.fighter = {};
@@ -198,11 +198,13 @@ let gameBattle = {
         $(".fighter").remove();
         $(".defender").remove();
         gameBattle.battle.reset();
-        showDialog("Game Over", "Yea, So it looks like " + gameBattle.battle.scoreBoard.winner + " is the winner", "Replay?", gameBattle.init);
+
+        showDialog("Game Over", ScoreBoard.gameHistory(), "Replay?", gameBattle.init);
+        // showDialog("Game Over", "Yea, So it looks like " + gameBattle.battle.winner.name + " is the winner", "Replay?", gameBattle.init);
     },
 
     drawboard: function() {
-        for (var i = 0; i < this.characters.length; i++) {
+        for (let i = 0; i < this.characters.length; i++) {
             let gbChars = this.characters;
 
             let fighterCard = $("<div>").addClass("fighter drop-shadow");
@@ -241,7 +243,7 @@ let gameBattle = {
         $("#" + gameBattle.currentDefender._id).removeClass("fighter").addClass("defender");
 
         if (gameBattle.defenders.length === 0) {
-            for (var i = 0; i < gameBattle.characters.length; i++) {
+            for (let i = 0; i < gameBattle.characters.length; i++) {
 
                 if (gameBattle.characters[i].team === 1) {
                     gameBattle.defenders.push(gameBattle.characters[i]);
@@ -253,14 +255,14 @@ let gameBattle = {
     },
 
     updateDefenders: function(defender) {
-        let result = gameBattle.defenders.filter(function(obj) {
+        var result = gameBattle.defenders.filter(function(obj) {
             return obj._id !== defender._id;
         })
         gameBattle.defenders = result;
     },
 
     showAttackButton: function() {
-        let attackButton = $("<button>").addClass("btn btn-attack");
+        var attackButton = $("<button>").addClass("btn btn-attack");
         attackButton.html("Attack!!")
         attackButton.insertAfter($("#" + gameBattle.fighter._id));
     },
@@ -275,7 +277,7 @@ let gameBattle = {
 //##########################  FUNCTIONS  #######################################
 //Getter for Chracter Object
 function getCharacter(character_id) {
-    let result = gameBattle.characters.filter(function(obj) {
+    var result = gameBattle.characters.filter(function(obj) {
         return obj._id === character_id;
     });
     return result[0];
@@ -286,7 +288,7 @@ function getCharacter(character_id) {
 function createCharacters(namesArray) {
     let characters = [];
 
-    for (var i = 0; i < namesArray.length; i++) {
+    for (let i = 0; i < namesArray.length; i++) {
 
         let randomAttack = Math.floor(Math.random() * 4) + 2;
         let randomHealth = Math.floor(Math.random() * 100) + 10;
@@ -326,23 +328,37 @@ function Character(id, name, team, hp, ap, picURL) {
 };
 //############### END CHARACTER FACTORY ########################################
 
-
+//TODO add a scoreboard to track each game until a browser refresh
 // Battle object constructor
-function Battle(_id, fighter, defenders) {
-    this.battle_id = _id || 1;
-    this.fighter = fighter || "";
-    this.defenders = defenders || [];
-
-    this.scoreBoard = new ScoreBoard();
-
-    this.reset = function() {
-        console.log("Called Battle Reset");
-    };
-};
-
-// ScoreBoard constructor
-function ScoreBoard(id) {
-    this.battle_id = id || 0;
+function Battle() {
     this.winner = "";
     this.losers = [];
+
+    this.reset = function() {
+        let capture = {
+            winner: this.winner
+        }
+        ScoreBoard.battles.push(capture);
+        console.log("Called Battle Reset");
+    };
+
+};
+
+// ScoreBoard
+var ScoreBoard = {
+    battles: [],
+
+    gameHistory: function() {
+        var table = "<table class='scoreboard'><tr><th>Winner</th><th>Final Health</th><th>Final Attack</th></tr>";
+        for (let i = 0; i < ScoreBoard.battles.length; i++) {
+            var data = '<td>' + ScoreBoard.battles[i].winner.name + '</td>';
+            data += '<td>' + ScoreBoard.battles[i].winner.healthPoints + '</td>';
+            data += '<td>' + ScoreBoard.battles[i].winner.attackPower + '</td>';
+            var dataitem = '<tr>' + data + '<tr>';
+            table += dataitem;
+        }
+        console.log(table);
+        return table;
+
+    }
 };

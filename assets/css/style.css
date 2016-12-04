@@ -113,7 +113,8 @@ img {
     color: #fff;
     font-size: 38px;
     font-weight: bold;
-    text-shadow: 2px 3px 5px black;
+    /*text-shadow: 2px 3px 5px black;*/
+    text-shadow: 2px 8px 9px black;
     font-family: "Helvetica", sans-serif;
     height: 100px;
     padding: 30px 10px 0 10px;
@@ -231,7 +232,23 @@ img {
     padding-left: 5px;
 }
 
-.fighterStats {}
+.scoreboard {
+    text-align: center;
+}
+
+.scoreboard>tr {
+    margin: 2px 20px;
+}
+
+.scoreboard tr>th {
+  text-decoration: underline;
+  padding: 0 10px 10px 10px;
+  text-align: center;
+}
+
+.scoreboard tr>td {
+    padding: 0 40px;
+}
 
 .defender {
     background-color: #5588A3;
