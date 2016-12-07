@@ -34,12 +34,12 @@ function toggleMusic() {
     console.log("called toggleMusic");
 
     if (backgroundMusic.playing()) {
-        $('#music-toggle>a>i').removeClass("fa-volume-up").addClass("fa-volume-off");
+        $('#music-toggle>i').removeClass("fa-volume-up").addClass("fa-volume-off");
         $('#music-toggle>a').text('Off');
         // Stop Music
         backgroundMusic.stop();
     } else {
-        $('#music-toggle>a>i').removeClass("fa-volume-off").addClass("fa-volume-up");
+        $('#music-toggle>i').removeClass("fa-volume-off").addClass("fa-volume-up");
         $('#music-toggle>a').text('On');
         // Start music
         backgroundMusic.play();
