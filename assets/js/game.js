@@ -27,7 +27,11 @@ const backgroundMusic = new Howl({
     src: ['assets/sounds/actionMusik.mp3'],
     html5: true,
     volume: 0.4,
-    loop: true
+    loop: true,
+
+    onfade: function() {
+        backgroundMusic.stop();
+    }
 });
 
 function toggleMusic() {
@@ -83,9 +87,6 @@ function showDialog(title, strMsg, btnText, action) {
                 $(this).dialog("close");
             }
         }],
-        onfade: function() {
-            backgroundMusic.stop();
-        }
     });
 }
 
@@ -95,6 +96,7 @@ let gameBattle = {
     currentDefender: {},
     battle: "",
     characters: [],
+    
 
     init: function() {
         console.log("called init");
