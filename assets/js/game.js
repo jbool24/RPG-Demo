@@ -20,7 +20,7 @@ const sound = new Howl({
         blast: [0, 1500],
         attack: [3800, 500],
         blam: [5290, 1000],
-        likeIt: [12400, 1500]
+        likeIt: [12500, 1600]
     }
 });
 const backgroundMusic = new Howl({
@@ -96,7 +96,7 @@ let gameBattle = {
     currentDefender: {},
     battle: "",
     characters: [],
-    
+
 
     init: function() {
         console.log("called init");
