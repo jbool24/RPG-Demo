@@ -2,6 +2,8 @@
 
 Role Playing Game demo using jQuery and JavaScript libraries
 
+![battle](assets/images/megabattle.png)
+
 Here's how the app works:
 
 When the game starts, the player will choose a character by clicking on the fighter's picture. The player will fight as that character for the rest of the game.
